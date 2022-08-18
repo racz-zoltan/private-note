@@ -1,0 +1,83 @@
+# Copyright (c) 2022 Rácz Zoltán
+
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+
+WindowManager:
+    OTPWindow:
+        id: otplogin
+    MainViewWindow:
+        id: mainview
+
+
+
+
+<OTPWindow>:
+	name: "one-time-password"
+    id: otplogin
+
+	MDBoxLayout:
+		orientation: "vertical"
+
+        MDLabel:
+            halign: "center"
+            pos_hint: {"center_x": 0.5, "center_y":0.3}
+            theme_text_color: "Primary"
+            font_style: "H5"
+
+        MDTextField:
+            id: onetimepass
+            hint_text: "One Time Password"
+            icon_right: "lock-clock"
+            size_hint_x: .6
+            halign: "center"
+            font_size: '24sp'
+            pos_hint: {"center_x": 0.5}
+            password: True
+            password_mask: root.password_mask
+            mode: "rectangle"
+            input_filter: 'int'
+            on_text_validate: app.release_one_time_pass()
+
+
+        Widget:
+            size_hint_y: None
+            height: 100           
+
+
+        Widget:
+            size_hint_y: None
+            height: 100
+
+
+
+
+<MainViewWindow>:
+	name: "mainview"
+    id: mainview
+
+            
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            type_height: "small"
+            id: privatenotesbar
+            title: "Notes"
+            size_hint: (1, .16)
+            left_action_items: [["note-edit-outline", lambda x: app.reveal_private_text(), "Open note", "Open note"]]
+            right_action_items:[["lock-outline", lambda x: app.deactivate(), "Deactivate", "Deactivate"]]
+
+
+        MDFloatLayout:
+            MDTextField:
+                id: privatenotes
+                hint_text: "Private Note"
+                size_hint: (.8, .99)
+                pos_hint: {'x':.1, 'y':0 }
+                mode: "rectangle"
+                multiline: True
+
+
+        Widget:
+            size_hint_y: None
+            height: 20             
